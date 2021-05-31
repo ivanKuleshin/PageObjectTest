@@ -92,7 +92,7 @@ public class GoogleCloudPricingCalculatorPage{
         return this;
     }
 
-    public void sendTotalCostViaEmail(){
+    public GoogleCloudPricingCalculatorPage sendTotalCostViaEmail(){
         driver.switchTo().frame(explicitWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//iframe[1]"))));
         driver.switchTo().frame("myFrame");
 
@@ -100,7 +100,10 @@ public class GoogleCloudPricingCalculatorPage{
         explicitWait.until(ExpectedConditions.visibilityOf(emailForm));
         emailInputField.click();
         emailInputField.sendKeys(Keys.LEFT_CONTROL + "v");
-        sendEmailButton.click();
+
+        explicitWait.until(ExpectedConditions.elementToBeClickable(sendEmailButton)).click();
+
+        return this;
     }
 
     public String getTotalEstimatedCost() {

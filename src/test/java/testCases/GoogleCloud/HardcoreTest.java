@@ -2,22 +2,24 @@ package testCases.GoogleCloud;
 
 import PageObjects.GoogleCloud.GoogleCloudMainPage;
 import PageObjects.GoogleCloud.GoogleCloudPricingCalculatorPage;
+import PageObjects.TenminEmail.TenMinEmailPage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 import setUp.BaseTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HardcoreTest extends BaseTest {
     private static final String PLATFORM_PRICING_CALCULATOR = "Google Cloud Platform Pricing Calculator";
     private static final String EXPECTED_CALCULATOR_URL = "https://cloud.google.com/products/calculator";
-    private static final String TEN_MIN_EMAIL_URL = "https://10minutemail.com/";
+    private static final String PATTERN = "USD \\d+.\\d{2}";
+    private static String originalTab = "";
+    private static String secondTab = "";
 
     @Test
     public void hardcore() {
@@ -28,25 +30,35 @@ public class HardcoreTest extends BaseTest {
 
         String totalEstimatedCost = pricingCalculatorPage.fillTheFormWithStandardParameters().getTotalEstimatedCost();
 
-        saveTemporaryEmailToClipboard();
-
+        TenMinEmailPage tenMinEmailPage = new TenMinEmailPage(driver);
+        saveTemporaryEmailToClipboard(tenMinEmailPage);
         pricingCalculatorPage.sendTotalCostViaEmail();
+
+        driver.switchTo().window(secondTab);
+        checkTotalCostFromEmailAndCalculator(tenMinEmailPage.getTotalCostInEmail(), totalEstimatedCost);
     }
 
-    void saveTemporaryEmailToClipboard(){
-        openNewTab();
+    private void checkTotalCostFromEmailAndCalculator(String totalCostFromEmail, String totalCostFromCalculator){
 
-        List<String> tabs = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(tabs.size() - 1));
+        totalCostFromEmail = applyPatternToString(PATTERN, totalCostFromEmail);
+        totalCostFromCalculator = applyPatternToString(PATTERN, totalCostFromCalculator);
 
-        driver.get(TEN_MIN_EMAIL_URL);
-
-        driver.findElement(By.xpath("//div[@id = 'copy_address']")).click();
-
-        driver.switchTo().window(tabs.stream().findFirst().orElseThrow());
+        assertThat(totalCostFromEmail).isEqualTo(totalCostFromCalculator);
     }
 
-    void openNewTab(){
-        ((JavascriptExecutor) driver).executeScript("window.open()");
+    private String applyPatternToString(String regex, String myString){
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(myString);
+        if (matcher.find()) {
+            myString = matcher.group();
+        }
+        return myString;
+    }
+
+    void saveTemporaryEmailToClipboard(TenMinEmailPage tenMinEmailPage){
+        originalTab = driver.getWindowHandle();
+        tenMinEmailPage.openPageInNewTab().copyTemporaryEmail();
+        secondTab = driver.getWindowHandle();
+        driver.switchTo().window(originalTab);
     }
 }

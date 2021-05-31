@@ -16,7 +16,7 @@ public class MainPageTest {
 
     @Before
     public void setUp() {
-//    chromedriver.exe
+
         System.setProperty("webdriver.gecko.driver", "D:\\IntelliJ IDEA Community Edition 2019.2\\IDEA projects\\testSelenium\\drivers\\geckodriver.exe");
         driver = new FirefoxDriver();
         WebDriverWait wait = new WebDriverWait(driver, 5);
