@@ -12,7 +12,7 @@ public class BaseTest {
 
     @BeforeSuite
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chromedriver1.exe");
         driver = new ChromeDriver();
 
         driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);

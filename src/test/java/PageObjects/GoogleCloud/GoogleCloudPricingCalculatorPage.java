@@ -1,6 +1,7 @@
 package PageObjects.GoogleCloud;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -10,7 +11,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
 
 public class GoogleCloudPricingCalculatorPage{
     private final WebDriverWait explicitWait;
@@ -21,7 +21,7 @@ public class GoogleCloudPricingCalculatorPage{
     @FindBy(xpath = "//md-tab-item/div[@title = 'Compute Engine']")
     private WebElement computeEngineIcon;
 
-    @FindBy(id = "input_65")
+    @FindBy(xpath = "//label[contains(text(), 'Number of instances')]/following-sibling::input")
     private WebElement numberOfInstancesInput;
 
     @FindBy(xpath = "(//div[contains(text(), 'Free: Debian, CentOS')])[1]")
@@ -39,6 +39,9 @@ public class GoogleCloudPricingCalculatorPage{
     @FindBy(xpath = "//form[@name = 'ComputeEngineForm']/div/button[contains(text(), 'Add to Estimate')]")
     private WebElement addToEstimateButton;
 
+    @FindBy(xpath = "//button[@aria-label = 'Email Estimate']")
+    private WebElement emailEstimateButton;
+
     @FindBy(xpath = "//*[@id = 'compute']/following-sibling::h2/b")
     private WebElement totalEstimatedCost;
 
@@ -47,6 +50,15 @@ public class GoogleCloudPricingCalculatorPage{
 
     @FindBy(xpath = "//md-list-item[@role = 'listitem']/div[contains(text(), 'Region')]")
     private WebElement regionLabel;
+
+    @FindBy(xpath = "//form[@name = 'emailForm']")
+    private WebElement emailForm;
+
+    @FindBy(xpath = "//label[contains(text(), 'Email')]/following-sibling::input")
+    private WebElement emailInputField;
+
+    @FindBy(xpath = "//button[@aria-label = 'Send Email']")
+    private WebElement sendEmailButton;
 
     public GoogleCloudPricingCalculatorPage(WebDriver driver) {
         this.driver = driver;
@@ -58,17 +70,11 @@ public class GoogleCloudPricingCalculatorPage{
         return driver.getCurrentUrl();
     }
 
-//    public GoogleCloudPricingCalculatorPage selectComputeEngineOption(){
-//        driver.switchTo().frame(mainIFrame);
-//        explicitWait.until(ExpectedConditions.visibilityOf(computeEngineIcon)).click();
-//        return this;
-//    }
-
     public GoogleCloudPricingCalculatorPage fillTheFormWithStandardParameters(){
         driver.switchTo().frame(explicitWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//iframe[1]"))));
         driver.switchTo().frame("myFrame");
 
-        // umber of instances
+        // number of instances
         explicitWait.until(ExpectedConditions.visibilityOf(numberOfInstancesInput)).sendKeys(NUMBER_OF_INSTANCES);
 
         // Operating System
@@ -84,6 +90,17 @@ public class GoogleCloudPricingCalculatorPage{
         addToEstimateButton.submit();
 
         return this;
+    }
+
+    public void sendTotalCostViaEmail(){
+        driver.switchTo().frame(explicitWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//iframe[1]"))));
+        driver.switchTo().frame("myFrame");
+
+        emailEstimateButton.click();
+        explicitWait.until(ExpectedConditions.visibilityOf(emailForm));
+        emailInputField.click();
+        emailInputField.sendKeys(Keys.LEFT_CONTROL + "v");
+        sendEmailButton.click();
     }
 
     public String getTotalEstimatedCost() {
