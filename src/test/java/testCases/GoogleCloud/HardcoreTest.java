@@ -2,13 +2,10 @@ package testCases.GoogleCloud;
 
 import PageObjects.GoogleCloud.GoogleCloudMainPage;
 import PageObjects.GoogleCloud.GoogleCloudPricingCalculatorPage;
-import PageObjects.TenminEmail.TenMinEmailPage;
-import org.openqa.selenium.By;
+import PageObjects.TenMinEmail.TenMinEmailPage;
 import org.testng.annotations.Test;
 import setUp.BaseTest;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
