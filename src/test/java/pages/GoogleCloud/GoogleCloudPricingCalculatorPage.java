@@ -1,4 +1,4 @@
-package PageObjects.GoogleCloud;
+package pages.GoogleCloud;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;

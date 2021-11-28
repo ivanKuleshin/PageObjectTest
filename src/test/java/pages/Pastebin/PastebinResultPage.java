@@ -1,6 +1,5 @@
-package PageObjects.Pastebin;
+package pages.Pastebin;
 
-import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

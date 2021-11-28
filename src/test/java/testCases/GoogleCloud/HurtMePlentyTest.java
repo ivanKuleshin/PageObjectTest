@@ -1,9 +1,11 @@
 package testCases.GoogleCloud;
 
-import PageObjects.GoogleCloud.GoogleCloudMainPage;
-import PageObjects.GoogleCloud.GoogleCloudPricingCalculatorPage;
+import pages.GoogleCloud.GoogleCloudMainPage;
+import pages.GoogleCloud.GoogleCloudPricingCalculatorPage;
 import org.testng.annotations.Test;
 import setUp.BaseTest;
+
+import static driver.DriverProvider.getInstance;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HurtMePlentyTest extends BaseTest {
@@ -15,8 +17,8 @@ public class HurtMePlentyTest extends BaseTest {
 
     @Test
     public void hurtMePlenty() {
-        new GoogleCloudMainPage(driver).openPage().searchForText(TEXT_FOR_SEARCH).clickOnElementWithText(TEXT_FOR_SEARCH);
-        GoogleCloudPricingCalculatorPage pricingCalculatorPage = new GoogleCloudPricingCalculatorPage(driver);
+        new GoogleCloudMainPage(getInstance().getDriver()).openPage().searchForText(TEXT_FOR_SEARCH).clickOnElementWithText(TEXT_FOR_SEARCH);
+        GoogleCloudPricingCalculatorPage pricingCalculatorPage = new GoogleCloudPricingCalculatorPage(getInstance().getDriver());
 
         assertThat(pricingCalculatorPage.getPageUrl()).isEqualTo(EXPECTED_CALCULATOR_URL);
 

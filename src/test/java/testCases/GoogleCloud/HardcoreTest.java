@@ -1,14 +1,14 @@
 package testCases.GoogleCloud;
 
-import PageObjects.GoogleCloud.GoogleCloudMainPage;
-import PageObjects.GoogleCloud.GoogleCloudPricingCalculatorPage;
-import PageObjects.TenMinEmail.TenMinEmailPage;
+import pages.GoogleCloud.GoogleCloudMainPage;
+import pages.GoogleCloud.GoogleCloudPricingCalculatorPage;
+import pages.TenMinEmail.TenMinEmailPage;
 import org.testng.annotations.Test;
 import setUp.BaseTest;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static driver.DriverProvider.getInstance;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HardcoreTest extends BaseTest {
@@ -20,18 +20,18 @@ public class HardcoreTest extends BaseTest {
 
     @Test
     public void hardcore() {
-        new GoogleCloudMainPage(driver).openPage().searchForText(PLATFORM_PRICING_CALCULATOR).clickOnElementWithText(PLATFORM_PRICING_CALCULATOR);
+        new GoogleCloudMainPage(getInstance().getDriver()).openPage().searchForText(PLATFORM_PRICING_CALCULATOR).clickOnElementWithText(PLATFORM_PRICING_CALCULATOR);
 
-        GoogleCloudPricingCalculatorPage pricingCalculatorPage = new GoogleCloudPricingCalculatorPage(driver);
+        GoogleCloudPricingCalculatorPage pricingCalculatorPage = new GoogleCloudPricingCalculatorPage(getInstance().getDriver());
         assertThat(pricingCalculatorPage.getPageUrl()).isEqualTo(EXPECTED_CALCULATOR_URL);
 
         String totalEstimatedCost = pricingCalculatorPage.fillTheFormWithStandardParameters().getTotalEstimatedCost();
 
-        TenMinEmailPage tenMinEmailPage = new TenMinEmailPage(driver);
+        TenMinEmailPage tenMinEmailPage = new TenMinEmailPage(getInstance().getDriver());
         saveTemporaryEmailToClipboard(tenMinEmailPage);
         pricingCalculatorPage.sendTotalCostViaEmail();
 
-        driver.switchTo().window(secondTab);
+        getInstance().getDriver().switchTo().window(secondTab);
         checkTotalCostFromEmailAndCalculator(tenMinEmailPage.getTotalCostInEmail(), totalEstimatedCost);
     }
 
@@ -53,9 +53,9 @@ public class HardcoreTest extends BaseTest {
     }
 
     void saveTemporaryEmailToClipboard(TenMinEmailPage tenMinEmailPage){
-        originalTab = driver.getWindowHandle();
+        originalTab = getInstance().getDriver().getWindowHandle();
         tenMinEmailPage.openPageInNewTab().copyTemporaryEmail();
-        secondTab = driver.getWindowHandle();
-        driver.switchTo().window(originalTab);
+        secondTab = getInstance().getDriver().getWindowHandle();
+        getInstance().getDriver().switchTo().window(originalTab);
     }
 }

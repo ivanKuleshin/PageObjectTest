@@ -1,9 +1,11 @@
 package testCases.Pastebin;
 
-import PageObjects.Pastebin.PastebinMainPage;
-import PageObjects.Pastebin.PastebinResultPage;
+import pages.Pastebin.PastebinMainPage;
+import pages.Pastebin.PastebinResultPage;
 import org.testng.annotations.Test;
 import setUp.BaseTest;
+
+import static driver.DriverProvider.getInstance;
 import static org.assertj.core.api.Assertions.*;
 
 public class ICanWinTest extends BaseTest {
@@ -14,7 +16,7 @@ public class ICanWinTest extends BaseTest {
 
     @Test(testName = "First task. I can win!")
     public void iCanWinTest(){
-        PastebinResultPage resultPage = new PastebinMainPage(driver).openPage()
+        PastebinResultPage resultPage = new PastebinMainPage(getInstance().getDriver()).openPage()
                 .enterDataToTextArea(INPUT_TEXT)
                 .setPasteExpirationParameterToTenMinutes(EXPIRATION_TIME)
                 .setTitleForPaste(TITLE_FOR_PASTE)

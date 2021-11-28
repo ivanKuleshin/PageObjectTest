@@ -1,4 +1,4 @@
-package PageObjects.Pastebin;
+package pages.Pastebin;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;

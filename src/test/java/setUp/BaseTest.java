@@ -1,26 +1,25 @@
 package setUp;
 
+import driver.DriverProvider;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
-import java.util.concurrent.TimeUnit;
-
 public class BaseTest {
-    protected WebDriver driver;
+    private WebDriver driver;
 
     @BeforeSuite
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chromedriver1.exe");
-        driver = new ChromeDriver();
+        if (null == driver) {
+            driver = DriverProvider.getInstance().getDriver();
 
-        driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
+        }
     }
 
     @AfterSuite
-    public void tearDown(){
-        driver.quit();
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }

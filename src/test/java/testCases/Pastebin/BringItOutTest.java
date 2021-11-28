@@ -1,12 +1,13 @@
 package testCases.Pastebin;
 
-import PageObjects.Pastebin.PastebinMainPage;
-import PageObjects.Pastebin.PastebinResultPage;
+import pages.Pastebin.PastebinMainPage;
+import pages.Pastebin.PastebinResultPage;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.support.Color;
 import org.testng.annotations.Test;
 import setUp.BaseTest;
 
+import static driver.DriverProvider.getInstance;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BringItOutTest extends BaseTest {
@@ -22,7 +23,7 @@ public class BringItOutTest extends BaseTest {
 
     @Test(testName = "Second task. Bring it out!")
     public void bringItOut(){
-        PastebinResultPage resultPage = new PastebinMainPage(driver).openPage()
+        PastebinResultPage resultPage = new PastebinMainPage(getInstance().getDriver()).openPage()
                 .enterDataToTextArea(INPUT_TEXT)
                 .setSyntaxHighlightToBash(EXPECTED_SYNTAX_HIGHLIGHT)
                 .setPasteExpirationParameterToTenMinutes(EXPIRATION_TIME)

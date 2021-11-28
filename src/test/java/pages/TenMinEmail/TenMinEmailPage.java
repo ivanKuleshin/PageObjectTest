@@ -1,4 +1,4 @@
-package PageObjects.TenMinEmail;
+package pages.TenMinEmail;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
