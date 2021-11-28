@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 public class ChromeDriverManager implements WebDriverManager {
 
     @Override
-    public WebDriver getDriver() {
+    public WebDriver createDriver() {
         io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
 

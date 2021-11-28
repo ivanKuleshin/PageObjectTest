@@ -1,12 +1,12 @@
 package testCases.Pastebin;
 
+import org.testng.annotations.Test;
 import pages.Pastebin.PastebinMainPage;
 import pages.Pastebin.PastebinResultPage;
-import org.testng.annotations.Test;
 import setUp.BaseTest;
 
 import static driver.DriverProvider.getInstance;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ICanWinTest extends BaseTest {
     private static final String INPUT_TEXT = "Hello from WebDriver";

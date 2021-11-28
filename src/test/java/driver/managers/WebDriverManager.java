@@ -4,5 +4,5 @@ import org.openqa.selenium.WebDriver;
 
 public interface WebDriverManager {
 
-    WebDriver getDriver();
+    WebDriver createDriver();
 }

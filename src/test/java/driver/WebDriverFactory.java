@@ -11,9 +11,9 @@ public class WebDriverFactory {
         WebDriver driver;
         if (null != browserName) {
             if ("firefox".equals(browserName)) {
-                driver = new FireFoxDriverManager().getDriver();
+                driver = new FireFoxDriverManager().createDriver();
             } else {
-                driver = new ChromeDriverManager().getDriver();
+                driver = new ChromeDriverManager().createDriver();
             }
         } else {
             throw new RuntimeException("Please specify correct browser name! Current value is null.");

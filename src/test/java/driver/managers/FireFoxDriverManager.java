@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 public class FireFoxDriverManager implements WebDriverManager {
     @Override
-    public WebDriver getDriver() {
+    public WebDriver createDriver() {
         io.github.bonigarcia.wdm.WebDriverManager.firefoxdriver().setup();
         WebDriver driver = new FirefoxDriver();
 

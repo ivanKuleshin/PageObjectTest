@@ -15,8 +15,7 @@ public class HardcoreTest extends BaseTest {
     private static final String PLATFORM_PRICING_CALCULATOR = "Google Cloud Platform Pricing Calculator";
     private static final String EXPECTED_CALCULATOR_URL = "https://cloud.google.com/products/calculator";
     private static final String PATTERN = "USD \\d+.\\d{2}";
-    private static String originalTab = "";
-    private static String secondTab = "";
+    private static String secondTab;
 
     @Test
     public void hardcore() {
@@ -53,7 +52,7 @@ public class HardcoreTest extends BaseTest {
     }
 
     void saveTemporaryEmailToClipboard(TenMinEmailPage tenMinEmailPage){
-        originalTab = getInstance().getDriver().getWindowHandle();
+        String originalTab = getInstance().getDriver().getWindowHandle();
         tenMinEmailPage.openPageInNewTab().copyTemporaryEmail();
         secondTab = getInstance().getDriver().getWindowHandle();
         getInstance().getDriver().switchTo().window(originalTab);
